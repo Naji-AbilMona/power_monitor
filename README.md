@@ -1,16 +1,8 @@
 # power_monitor
 
-A new Flutter application.
+This project is part of AUB's CMPS253 class under the supervision of Prof. M. Bdeir.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The aim of the project is to deliver a mobile application that utilizes a Raspberry Pi and a camera
+that takes automatic pictures of an electricity odometer, reads the characters from the image and
+stores the data in an appropriate database in order to send information and fetches relevant queries
+ of the user relevant to his/her electricity consumption.
