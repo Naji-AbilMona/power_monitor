@@ -4,6 +4,7 @@ import 'package:power_monitor/pages/screen_boxes/current_odometer.dart';
 import 'package:power_monitor/pages/screen_boxes/graph_consumption.dart';
 import 'package:power_monitor/pages/screen_boxes/todays_consumption.dart';
 import 'package:power_monitor/pages/screen_boxes/month_to_date_consumption.dart';
+import 'package:power_monitor/services/auth.dart';
 //import 'package:power_monitor/pages/screen_boxes/graph_consumption.dart';
 
 class Home extends StatefulWidget {
@@ -16,27 +17,28 @@ class _HomeState extends State<Home> {
   //Map data = {};
   //double width = MediaQuery.of(context).size.width; get the size of the screen
 
+  //for logout
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey[900],
+          backgroundColor: Colors.blueGrey[700],
           title: Text('Power Monitor'),
           centerTitle: true,
           elevation: 0,
           actions: <Widget>[
             FlatButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => About()),
-                );
+              onPressed: () async {
+                await _auth.signOut();
+
               },
               icon: Icon(
                 Icons.people,
                 color: Colors.white70,
               ),
-              label: Text(''),
+              label: Text('logout'),
             )
           ],
         ),
