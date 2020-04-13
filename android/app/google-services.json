@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "289418668812",
+    "firebase_url": "https://power-monitor-889a4.firebaseio.com",
+    "project_id": "power-monitor-889a4",
+    "storage_bucket": "power-monitor-889a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289418668812:android:1edf72eac9d8a590197729",
+        "android_client_info": {
+          "package_name": "com.powermonitorproject.power_monitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289418668812-snm6hd8rpjtr08djdvsjjhh6bsrecff6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnNZM-409MOrQXJcNkLsj8FPBBnhLeyak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289418668812-snm6hd8rpjtr08djdvsjjhh6bsrecff6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
