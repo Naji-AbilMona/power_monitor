@@ -31,9 +31,9 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
             height: 15,
           ),
           Text(
-            //'no reads yet',
+            'no reads yet',
             //data.getUsage + ' kw',
-            usage,
+            //usage,
             style: TextStyle(
               fontSize: 38,
               wordSpacing: 2,
@@ -46,7 +46,8 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
           ),
           Text(
             //'Last read was done at: ' + data.getTime,
-            time,
+            //time,
+            'error in reading',
             style: TextStyle(
               color: Colors.grey[200],
             ),
