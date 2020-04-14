@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  azblob: ^1.0.3
   flutter:
     sdk: flutter
 
@@ -33,9 +34,10 @@ dependencies:
   fl_chart: ^0.8.1
 
 
+
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+#  flutter_test:
+#    sdk: flutter
 
 
 # For information on the generic Dart part of this file, see the

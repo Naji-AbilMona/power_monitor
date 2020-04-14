@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.all(10.0),
                   child: CurrentOdometer(),
                 ),
-                SizedBox(height: (MediaQuery.of(context).size.height)/8.7), //80 - emu 50
+                SizedBox(height: (MediaQuery.of(context).size.height)/9.5), //80 - emu 50
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                SizedBox(height: (MediaQuery.of(context).size.height)/5.5), //110 - emu 70
+                SizedBox(height: (MediaQuery.of(context).size.height)/15), //110 - emu 70
                 Container(
                   child: GraphConsumption(),
                 ),
