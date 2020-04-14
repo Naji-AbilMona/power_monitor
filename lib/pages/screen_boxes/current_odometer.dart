@@ -38,7 +38,7 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
               fontSize: 38,
               wordSpacing: 2,
               color: Color(0xffffa500),
-              //fontWeight: FontWeight.bold,
+              ////fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(
