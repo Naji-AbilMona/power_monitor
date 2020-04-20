@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:power_monitor/data/electricity_usage.dart';
+import 'package:power_monitor/models/user.dart';
 import 'package:power_monitor/services/auth.dart';
 import 'package:power_monitor/services/database.dart';
+import 'package:provider/provider.dart';
 
 class CurrentOdometer extends StatefulWidget {
   @override
@@ -9,54 +14,76 @@ class CurrentOdometer extends StatefulWidget {
 }
 
 class _CurrentOdometerState extends State<CurrentOdometer> {
-  //ElectricityUsage electricityUsage = ElectricityUsage(odometer: 'init: no reads yet', time: 'N/A');
-  //DatabaseService data = DatabaseService(odometer: 'init: no reads yet', time: 'N/A');
-  AuthService data = AuthService(usage: 'init error', time: 'init error');
-  //String usage = AuthService().getUsage;
-  //String time = AuthService().getTime;
-  String usage = DatabaseService().usage;
-  String time = DatabaseService().timeData;
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 5),
-          Text(
-            'Your current electricity Odometer is:',
-            style: TextStyle(color: Colors.grey[200], fontSize: 14),
+    return Column(
+      children: <Widget>[
+        Text(
+          'Your Current Odometer',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            color: Color(0xffffa500),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            'no reads yet',
-            //data.getUsage + ' kw',
-            //usage,
-            style: TextStyle(
-              fontSize: 38,
-              wordSpacing: 2,
-              color: Color(0xffffa500),
-              ////fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            //'Last read was done at: ' + data.getTime,
-            //time,
-            'error in reading',
-            style: TextStyle(
-              color: Colors.grey[200],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
-      ),
+        ),
+        SizedBox(height: 8),
+        new StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance.collection('consumption').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return new Text('Error: ${snapshot.error}');
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return new Text('Loading...');
+              default:
+                final user = Provider.of<User>(context);
+                String uid = user.email.trim();
+                var docList = snapshot.data.documents;
+                var doc;
+                String t = docList[0].documentID;
+                for (int i = 0; i < docList.length; i++) {
+                  if (docList[i].documentID.trim() == uid.trim()) {
+                    doc = docList[i];
+                    //print('found!!! userName = ${doc.data['userName']}');
+                  } else {
+                    //print('wanted doc NOT found!!!');
+                  }
+                }
+                String userName = doc.data['userName'] == null
+                    ? 'userName is returning null '
+                    : doc.data['userName'];
+                //print(userName);
+                String odometer = doc.data['odometer'] == null
+                    ? 'odometer is returning null '
+                    : doc.data['odometer'];
+                //print(odometer + 'kw');
+                Timestamp timeStamp = doc.data['timeStamp'];
+                //print('timeStamp: ${timeStamp.toDate()}');
+
+                return Column(
+                  children: <Widget>[
+                    new Text(odometer == null ? 'null!!' : odometer + ' kw',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 34,
+                          wordSpacing: 2,
+                          color: Colors.grey[200],
+                        )),
+                    SizedBox(height: 8),
+                    Text(
+                      'last read was done at: ${timeStamp.toDate()}',
+                      style: TextStyle(
+                        color: Colors.grey[200],
+                      ),
+                    ),
+                  ],
+                );
+            }
+          },
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as https; //dart package: Future-based library for making HTTP requests. https://pub.dev/packages/http
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart'
+    as https; //dart package: Future-based library for making HTTP requests. https://pub.dev/packages/http
 import 'dart:convert'; //dart library: Encoders and decoders for converting between different data representations, including JSON and UTF-8. https://api.dart.dev/stable/2.7.1/dart-convert/dart-convert-library.html
 import 'package:intl/intl.dart'; //dart date format package. https://pub.dev/packages/intl
 import 'package:azblob/azblob.dart';
@@ -8,26 +10,58 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:power_monitor/services/auth.dart';
 import 'package:power_monitor/models/user.dart';
 
-
 class ElectricityUsage {
-  String date;
-  String time;
-  String odometer;
+  String location;
+  static String odometer = 'init';
+  static Timestamp timeStamp;
+  static String userName;
+  static Map<dynamic, String> historicReads;
 
 
-  //collection reference
+  //ElectricityUsage({this.date, this.time, this.odometer});
+
+  final CollectionReference consumptionCollection =
+      Firestore.instance.collection('consumption');
+
+
+  StreamBuilder<QuerySnapshot> stream = StreamBuilder(
+    stream: Firestore.instance.collection('consumption').snapshots(),
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      if (!snapshot.hasData) {
+        return new Text('Error: ${snapshot.error}');
+      }
+      switch (snapshot.connectionState) {
+        case ConnectionState.waiting:
+          return new Text('Loading...');
+        default:
+          String uid = "n1@gmail.com";
+          var docList = snapshot.data.documents;
+          var doc;
+          String t = docList[0].documentID;
+
+          for (int i = 0; i < docList.length; i++) {
+            if (docList[i].documentID.compareTo(uid) == 1) {
+              doc = docList[i];
+              print('found!!!');
+            } else {
+              print('wanted doc NOT found!!!');
+            }
+          }
+          String userName = doc.data['userName'] == null
+              ? 'userName is returning null '
+              : doc.data['userName'];
+          print(userName);
+          odometer = doc.data['odometer'] == null
+              ? 'odometer is returning null '
+              : doc.data['odometer'];
+          print(odometer + 'kw');
 
 
 
-  FirebaseUser usr = AuthService().getUsr;
-
-  ElectricityUsage ({this.date, this.time, this.odometer});
-
-
-
-
-  final CollectionReference consumptionCollection = Firestore.instance.collection('consumption');
-
+          return new Text(odometer == null ? 'null!!' : odometer + ' kw');
+      }
+    },
+  );
 
   Future<void> getUsage(String path) async {
     try {
@@ -38,18 +72,20 @@ class ElectricityUsage {
 
 //      await DatabaseService(uid: usr.uid).consumptionCollection
 //          .getDocuments().then();
-        await Firestore.instance.collection('consumption').getDocuments().then((value){
-          odometer = (value.documents[0].data["elect_consumption"].toString());
-          time = value.documents[0].data["time"].toString();
-        });
-        //print(Firestore.instance.collection('consumption').document(usr.uid));
+      await Firestore.instance
+          .collection('consumption')
+          .getDocuments()
+          .then((value) {
+        odometer = (value.documents[0].data["elect_consumption"].toString());
+        //time = value.documents[0].data["time"].toString();
+      });
+      //print(Firestore.instance.collection('consumption').document(usr.uid));
 
-        //print(usr.uid);
-        //print(odometer);
-        //print(time);
+      //print(usr.uid);
+      //print(odometer);
+      //print(time);
 
-
-        //print(ref.documentID);
+      //print(ref.documentID);
       //odometer = response.body.toString();
     } catch (e) {
       print('caught error: $e');
@@ -57,11 +93,9 @@ class ElectricityUsage {
     }
   }
 
-
   String get usage {
-    getUsage ('https://powermonitor.servicebus.windows.net/powermonitorqueue/messages/head');
+    getUsage(
+        'https://powermonitor.servicebus.windows.net/powermonitorqueue/messages/head');
     return odometer;
   }
 }
-
-//https://docs.microsoft.com/en-us/rest/api/servicebus/receive-and-delete-message-destructive-read

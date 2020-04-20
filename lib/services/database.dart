@@ -1,49 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:power_monitor/models/user.dart';
 import 'package:power_monitor/services/auth.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
   final String uid;
-  String time;
-  String odometer = 'no init';
-  DatabaseService({this.uid, this.odometer, this.time});
+
+  DatabaseService({this.uid});
+
   //collection reference
-final CollectionReference consumptionCollection = Firestore.instance.collection('consumption');
-Future updateUserData(String userName, String time, int elect_consumption) async {
-  return await consumptionCollection.document(uid).setData({
-  'userName':userName,
-  'time':time,
-  'elect_consumption':elect_consumption,
-});
-}
+  final CollectionReference consumptionCollection =
+      Firestore.instance.collection('consumption');
 
-
-  Future getUsage() async{
-    try {
-      await Firestore.instance.collection('consumption').getDocuments().then((value){
-        odometer = (value.documents[0].data["elect_consumption"].toString());
-        time = value.documents[0].data["time"].toString();
-      });
-      print(uid);
-      print('odometer: ' + odometer);
-      print('time: ' + time);
-    } catch (e) {
-      print('caught error: $e');
-      odometer = 'error reading';
-    }
-    }
-
-  String get usage {
-    //print(this.uid);
-    getUsage ();
-    return odometer;
+  Future updateUserData(String userName, String location, Timestamp timeStamp,
+      String odometer, Map<dynamic, String> historicReads) async {
+    return await consumptionCollection.document(uid).setData({
+      'userName': userName,
+      'location': location,
+      'timeStamp': timeStamp,
+      'odometer': odometer,
+      'historicReads': historicReads,
+    });
   }
-
-  String get timeData {
-    //print(this.uid);
-    getUsage ();
-    return time;
-  }
-
-
-
 }

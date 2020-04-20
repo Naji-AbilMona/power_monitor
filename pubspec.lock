@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.1"
   azblob:
     dependency: "direct main"
     description:
@@ -21,14 +21,28 @@ packages:
       name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.2"
+    version: "1.1.3"
   cloud_firestore:
     dependency: "direct main"
     description:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.11"
+    version: "0.13.5"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1+2"
   collection:
     dependency: transitive
     description:
@@ -164,7 +178,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.4"
+    version: "1.7.0"
   path_drawing:
     dependency: transitive
     description:
@@ -185,7 +199,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0+1"
+    version: "1.9.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -206,7 +220,7 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.1.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -218,7 +232,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.5"
+    version: "1.7.0"
   stack_trace:
     dependency: transitive
     description:

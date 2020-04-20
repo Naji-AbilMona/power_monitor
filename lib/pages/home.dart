@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:power_monitor/models/user.dart';
 import 'package:power_monitor/pages/about.dart';
 import 'package:power_monitor/pages/screen_boxes/current_odometer.dart';
 import 'package:power_monitor/pages/screen_boxes/graph_consumption.dart';
@@ -15,13 +17,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   //initiate a Map for data like so:
   //Map data = {};
-  //double width = MediaQuery.of(context).size.width; get the size of the screen
+  //double width = MediaQuery.of(context).size.width; //get the size of the screen
 
   //for logout
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey[700],
@@ -32,10 +37,9 @@ class _HomeState extends State<Home> {
             FlatButton.icon(
               onPressed: () async {
                 await _auth.signOut();
-
               },
               icon: Icon(
-                Icons.people,
+                Icons.exit_to_app,
                 color: Colors.white70,
               ),
               label: Text('logout'),
@@ -55,10 +59,10 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(0),
                   child: CurrentOdometer(),
                 ),
-                SizedBox(height: (MediaQuery.of(context).size.height)/9.5), //80 - emu 50
+                SizedBox(height: screenHeight / 14), //80 - emu 50
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -69,7 +73,7 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                SizedBox(height: (MediaQuery.of(context).size.height)/15), //110 - emu 70
+                SizedBox(height: screenHeight / 13), //110 - emu 70
                 Container(
                   child: GraphConsumption(),
                 ),

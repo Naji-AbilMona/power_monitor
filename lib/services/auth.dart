@@ -8,83 +8,76 @@ class AuthService {
   String usage;
   String time;
 
+
   AuthService({this.usage, this.time});
 
   //create user object based on firebaseuser
-  User _userFromFirebaseUser(FirebaseUser user){
-    return user != null ? User(uid: user.uid) : null;
+  User _userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? User(uid: user.uid, email: user.email) : null;
   }
+
   // auth change user stream
-  Stream<User> get user{
+  Stream<User> get user {
     return _auth.onAuthStateChanged
-      .map((FirebaseUser user)=> _userFromFirebaseUser(user));
-      //.map(_userFromFirebaseUser);
+        .map((FirebaseUser user) => _userFromFirebaseUser(user));
+    //.map(_userFromFirebaseUser);
   }
 
   FirebaseUser usr;
+
   //sign in anon
-  Future signinAnon() async{
+  Future signinAnon() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
       usr = result.user;
       return _userFromFirebaseUser(usr);
-    }catch(e){ print(e.toString());
-        return null;
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
+
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
-    try{
-      AuthResult result = await _auth.signInWithEmailAndPassword(email: email.trim(), password: password);
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email.trim().toLowerCase(), password: password);
       usr = result.user;
-      await DatabaseService(uid: usr.uid).getUsage();
-      usage = DatabaseService(uid: usr.uid).odometer;
-      time = DatabaseService(uid: usr.uid).time;
+
       return _userFromFirebaseUser(usr);
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
   //register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async{
-    try{
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password);
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email.trim().toLowerCase(), password: password);
       usr = result.user;
+      Timestamp timestamp = Timestamp.now();
+      String location = 'Beirut'; //change later
 
       //create a new document for the user with uid
-      await DatabaseService(uid: usr.uid).updateUserData(email, '0000h',0000);
-      await DatabaseService(uid: usr.uid).getUsage();
-      usage = DatabaseService(uid: usr.uid).odometer;
-      time = DatabaseService(uid: usr.uid).time;
+      await DatabaseService(uid: email.trim().toLowerCase())
+          .updateUserData(email.trim().toLowerCase(), location, timestamp, '0000', {'timestamp':'read'},);
 
       return _userFromFirebaseUser(usr);
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-  FirebaseUser get getUsr{
-    return usr;
-  }
-
   //sign out
-Future signOut() async {
-    try{
+  Future signOut() async {
+    try {
       return await _auth.signOut();
-    }catch(e){
-        print(e.toString());
-        return null;
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
-}
-
-  String  get getUsage{
-    return usage;
-}
-
-  String  get getTime{
-    return time;
   }
 }
