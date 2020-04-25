@@ -1,13 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:power_monitor/models/user.dart';
-import 'package:power_monitor/pages/about.dart';
 import 'package:power_monitor/pages/screen_boxes/current_odometer.dart';
 import 'package:power_monitor/pages/screen_boxes/graph_consumption.dart';
 import 'package:power_monitor/pages/screen_boxes/todays_consumption.dart';
 import 'package:power_monitor/pages/screen_boxes/month_to_date_consumption.dart';
 import 'package:power_monitor/services/auth.dart';
-//import 'package:power_monitor/pages/screen_boxes/graph_consumption.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,10 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  //initiate a Map for data like so:
-  //Map data = {};
-  //double width = MediaQuery.of(context).size.width; //get the size of the screen
-
   //for logout
   final AuthService _auth = AuthService();
 

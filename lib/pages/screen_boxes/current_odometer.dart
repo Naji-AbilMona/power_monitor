@@ -1,11 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:power_monitor/data/electricity_usage.dart';
 import 'package:power_monitor/models/user.dart';
-import 'package:power_monitor/services/auth.dart';
-import 'package:power_monitor/services/database.dart';
 import 'package:provider/provider.dart';
 
 class CurrentOdometer extends StatefulWidget {
@@ -29,8 +24,7 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
         SizedBox(height: 8),
         new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('consumption').snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
               return new Text('Error: ${snapshot.error}');
             }
@@ -57,14 +51,14 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
                 //print(userName);
                 String odometer = doc.data['odometer'] == null
                     ? 'odometer is returning null '
-                    : doc.data['odometer'];
+                    : doc.data['odometer'].toString();
                 //print(odometer + 'kw');
-                Timestamp timeStamp = doc.data['timeStamp'];
+                String timeStamp = doc.data['timeStamp'];
                 //print('timeStamp: ${timeStamp.toDate()}');
 
                 return Column(
                   children: <Widget>[
-                    new Text(odometer == null ? 'null!!' : odometer + ' kw',
+                    new Text(odometer == null ? 'null!!' : odometer + ' kwh',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 34,
@@ -73,7 +67,7 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
                         )),
                     SizedBox(height: 8),
                     Text(
-                      'last read was done at: ${timeStamp.toDate()}',
+                      'last read was done at: ${timeStamp}',
                       style: TextStyle(
                         color: Colors.grey[200],
                       ),

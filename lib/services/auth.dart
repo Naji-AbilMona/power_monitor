@@ -8,7 +8,6 @@ class AuthService {
   String usage;
   String time;
 
-
   AuthService({this.usage, this.time});
 
   //create user object based on firebaseuser
@@ -18,8 +17,7 @@ class AuthService {
 
   // auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-        .map((FirebaseUser user) => _userFromFirebaseUser(user));
+    return _auth.onAuthStateChanged.map((FirebaseUser user) => _userFromFirebaseUser(user));
     //.map(_userFromFirebaseUser);
   }
 
@@ -61,8 +59,13 @@ class AuthService {
       String location = 'Beirut'; //change later
 
       //create a new document for the user with uid
-      await DatabaseService(uid: email.trim().toLowerCase())
-          .updateUserData(email.trim().toLowerCase(), location, timestamp, '0000', {'timestamp':'read'},);
+      await DatabaseService(uid: email.trim().toLowerCase()).updateUserData(
+        email.trim().toLowerCase(),
+        location,
+        timestamp,
+        '0000',
+        {'timestamp': 'read'},
+      );
 
       return _userFromFirebaseUser(usr);
     } catch (e) {
