@@ -38,11 +38,12 @@ class _GraphConsumptionState extends State<GraphConsumption> {
                   stream: Firestore.instance.collection('consumption').snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return new Text('Data Reading Error: ${snapshot.error}');
+                      print('Error: ${snapshot.error}');
+                      return new Text('\nLoading...');
                     }
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return new Text('Loading...');
+                        return new Text('\nLoading....');
                       default:
                         final user = Provider.of<User>(context);
                         String uid = user.email.trim();

@@ -26,17 +26,18 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
           stream: Firestore.instance.collection('consumption').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return new Text('Error: ${snapshot.error}');
+              print('Error: ${snapshot.error}');
+              return new Text('Loading...');
             }
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return new Text('Loading...');
+                return new Text('Loading....');
               default:
                 final user = Provider.of<User>(context);
                 String uid = user.email.trim();
                 var docList = snapshot.data.documents;
                 var doc;
-                String t = docList[0].documentID;
+
                 for (int i = 0; i < docList.length; i++) {
                   if (docList[i].documentID.trim() == uid.trim()) {
                     doc = docList[i];
@@ -53,7 +54,7 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
                     ? 'odometer is returning null '
                     : doc.data['odometer'].toString();
                 //print(odometer + 'kw');
-                String timeStamp = doc.data['timeStamp'];
+                String timeStamp = doc.data['timeStamp'] == null ? 'null' : doc.data['timeStamp'];
                 //print('timeStamp: ${timeStamp.toDate()}');
 
                 return Column(

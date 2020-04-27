@@ -26,11 +26,12 @@ class _TodaysConsumptionState extends State<TodaysConsumption> {
           stream: Firestore.instance.collection('consumption').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return new Text('Error: ${snapshot.error}');
+              print('Error: ${snapshot.error}');
+              return new Text('Loading...');
             }
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return new Text('Loading...');
+                return new Text('Loading....');
               default:
                 final user = Provider.of<User>(context);
                 String uid = user.email.trim();
@@ -52,15 +53,17 @@ class _TodaysConsumptionState extends State<TodaysConsumption> {
                 String odometer = doc.data['odometer'] == null
                     ? 'odometer is returning null '
                     : doc.data['odometer'].toString();
-                Map historicReads = doc.data['historicReads'];
+                Map historicReads =
+                    doc.data['historicReads'] == null ? {'0': '0'} : doc.data['historicReads'];
 
-                int current = int.parse(doc.data['odometer'].toString());
+                int current =
+                    doc.data['odometer'] == null ? 0 : int.parse(doc.data['odometer'].toString());
 
                 int currentYear = DateTime.now().year;
                 int currentMonth = DateTime.now().month;
                 int currentDay = DateTime.now().day;
 
-            //////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////
                 List firstLastdates(int currentYear, currentMonth, currentDay) {
                   int maxHour = -1;
                   int minHour = 25;
@@ -109,17 +112,20 @@ class _TodaysConsumptionState extends State<TodaysConsumption> {
                       maxMinute;
                   return [firstReadOfDayDate, lastReadOfDayDate];
                 }
-        //////////////////////////////////////////////////////////////////////////////////////////
-                String firstReadDate = firstLastdates(currentYear, currentMonth, currentDay)[0].toString();
+                //////////////////////////////////////////////////////////////////////////////////////////
+                String firstReadDate =
+                    firstLastdates(currentYear, currentMonth, currentDay)[0].toString();
                 //String lastReadDate = firstLastdates(currentYear, currentMonth, currentDay)[1].toString();
 
-                int firstReadOfDay = historicReads[firstReadDate] == null ? 0 : historicReads[firstReadDate];
+                int firstReadOfDay = historicReads[firstReadDate] == null
+                    ? 0
+                    : int.parse(historicReads[firstReadDate]);
 
-                int todaysConsumption =  historicReads[firstReadDate] == null ? 0 :current - firstReadOfDay;
+                int todaysConsumption =
+                    historicReads[firstReadDate] == null ? 0 : current - firstReadOfDay;
 
-                double firstReadHour = ((((double.parse(firstReadDate)).toDouble())/100)%100);
-                double firstReadMinute = (((double.parse(firstReadDate)).toDouble())%100);
-
+                double firstReadHour = ((((double.parse(firstReadDate)).toDouble()) / 100) % 100);
+                double firstReadMinute = (((double.parse(firstReadDate)).toDouble()) % 100);
 
                 return new Text(
                     firstReadHour == 25 || firstReadMinute == 61

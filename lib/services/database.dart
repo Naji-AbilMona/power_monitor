@@ -9,7 +9,7 @@ class DatabaseService {
   //collection reference
   final CollectionReference consumptionCollection = Firestore.instance.collection('consumption');
 
-  Future updateUserData(String userName, String location, Timestamp timeStamp, dynamic odometer,
+  Future updateUserData(String userName, String location, String timeStamp, dynamic odometer,
       Map<dynamic, dynamic> historicReads) async {
     return await consumptionCollection.document(uid).setData({
       'userName': userName,

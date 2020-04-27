@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:power_monitor/pages/ElectrisityBill.dart';
 import 'package:power_monitor/pages/screen_boxes/current_odometer.dart';
 import 'package:power_monitor/pages/screen_boxes/graph_consumption.dart';
 import 'package:power_monitor/pages/screen_boxes/todays_consumption.dart';
@@ -18,7 +19,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueGrey[700],
@@ -50,6 +50,17 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
+                RaisedButton(
+                  color: Colors.black12,
+                  child: Text('Electrisity Bill', style: TextStyle(color: Colors.white70),),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ElectrisityBill()),
+                    );
+                  },
+                ),
+                SizedBox(height: screenHeight / 25),
                 Padding(
                   padding: const EdgeInsets.all(0),
                   child: CurrentOdometer(),
@@ -65,10 +76,11 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                SizedBox(height: screenHeight / 13), //110 - emu 70
+                SizedBox(height: screenHeight / 8), //110 - emu 70
                 Container(
                   child: GraphConsumption(),
                 ),
+                SizedBox(height: screenHeight / 32), //110 - emu 70
               ],
             ),
           ),

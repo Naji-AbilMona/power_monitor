@@ -28,6 +28,7 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.blue[800],
             appBar: AppBar(
               backgroundColor: Colors.blue[600],
@@ -50,10 +51,8 @@ class _SignInState extends State<SignIn> {
                   children: <Widget>[
                     SizedBox(height: 20.0),
                     TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Email'),
-                        validator: (val) =>
-                            val.isEmpty ? 'Enter an email' : null,
+                        decoration: textInputDecoration.copyWith(hintText: 'Email'),
+                        validator: (val) => val.isEmpty ? 'Enter an email' : null,
                         onChanged: (val) {
                           setState(() => email = val);
                         }),
@@ -61,12 +60,10 @@ class _SignInState extends State<SignIn> {
                       height: 20.0,
                     ),
                     TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Password'),
+                        decoration: textInputDecoration.copyWith(hintText: 'Password'),
                         obscureText: true,
-                        validator: (val) => val.length < 6
-                            ? 'Enter a password, 6 or more characters'
-                            : null,
+                        validator: (val) =>
+                            val.length < 6 ? 'Enter a password, 6 or more characters' : null,
                         onChanged: (val) {
                           setState(() => password = val);
                         }),
@@ -80,12 +77,11 @@ class _SignInState extends State<SignIn> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
-                            dynamic result = await _auth
-                                .signInWithEmailAndPassword(email, password);
+                            dynamic result =
+                                await _auth.signInWithEmailAndPassword(email, password);
                             if (result == null) {
                               setState(() {
-                                error =
-                                    'could not sign in with those credentials';
+                                error = 'could not sign in with those credentials';
                                 loading = false;
                               });
                             }
@@ -95,6 +91,11 @@ class _SignInState extends State<SignIn> {
                     Text(
                       error,
                       style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    ),
+                    Image(
+                      image: AssetImage('assets/PowerMonitorLogo.jpg'),
+                      height: MediaQuery.of(context).size.height / 3,
+                      width: MediaQuery.of(context).size.width / 2,
                     ),
                   ],
                 ),

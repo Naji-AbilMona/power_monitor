@@ -26,11 +26,12 @@ class _MonthToDateConsumptionState extends State<MonthToDateConsumption> {
           stream: Firestore.instance.collection('consumption').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return new Text('Error: ${snapshot.error}');
+              print('Error: ${snapshot.error}');
+              return new Text('Loading...');
             }
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return new Text('Loading...');
+                return new Text('Loading....');
               default:
                 final user = Provider.of<User>(context);
                 String uid = user.email.trim();
@@ -92,7 +93,7 @@ class _MonthToDateConsumptionState extends State<MonthToDateConsumption> {
                 int firstReadOfMonth =
                     (firstReadHour == 25 || firstReadMinute == 61 || firstReadDayInMonth == 32)
                         ? 0
-                        : historicReads[firstReadOfMonthDate.toString()];
+                        : int.parse(historicReads[firstReadOfMonthDate.toString()].toString());
 
                 int monthToDateConsumption = current - firstReadOfMonth;
 

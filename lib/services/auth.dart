@@ -55,16 +55,29 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email.trim().toLowerCase(), password: password);
       usr = result.user;
-      Timestamp timestamp = Timestamp.now();
+      String timestamp = new DateTime(DateTime.now().day, DateTime.now().month, DateTime.now().day,
+              DateTime.now().hour, DateTime.now().minute)
+          .toString();
       String location = 'Beirut'; //change later
+      int currentYear = DateTime.now().year;
+      int currentMonth = DateTime.now().month;
+      int currentDay = DateTime.now().day;
+      int currentHour = DateTime.now().hour;
+      int currentMinute = DateTime.now().minute;
+
+      int readDate = (currentYear * 100000000) +
+          (currentMonth * 1000000) +
+          (currentDay * 10000) +
+          (currentHour * 100) +
+          currentMinute;
 
       //create a new document for the user with uid
       await DatabaseService(uid: email.trim().toLowerCase()).updateUserData(
         email.trim().toLowerCase(),
         location,
         timestamp,
-        '0000',
-        {'timestamp': 'read'},
+        '000000',
+        {readDate.toString(): '000000'},
       );
 
       return _userFromFirebaseUser(usr);
