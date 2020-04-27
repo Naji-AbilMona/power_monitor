@@ -211,6 +211,7 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                             Text(
                               'Subscription of more than 5 k.v.a',
                               style: TextStyle(
+                                fontSize: h/45,
                                 color: Colors.lightGreenAccent,
                               ),
                               textAlign: TextAlign.left,
@@ -234,6 +235,7 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                             Text(
                               'Two-month billing',
                               style: TextStyle(
+                                fontSize: h/45,
                                 color: Colors.lightGreenAccent,
                               ),
                               textAlign: TextAlign.left,
@@ -273,7 +275,7 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                                         : monthToDateConsumption.toString() + ' kwh',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: h/23,
+                                      fontSize: h/25,
                                       wordSpacing: 2,
                                       color: Colors.grey[200],
                                     )),
@@ -299,7 +301,7 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                                         : consumptionEST.toString() + ' kwh',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: h/23,
+                                      fontSize: h/25,
                                       wordSpacing: 2,
                                       color: Colors.grey[200],
                                     )),
@@ -307,7 +309,7 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                             ),
                           ],
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height / 10),
+                        SizedBox(height: MediaQuery.of(context).size.height / 16),
 
                         Container(
                           color: Colors.white38,

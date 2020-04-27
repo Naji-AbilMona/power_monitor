@@ -69,10 +69,11 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
                           wordSpacing: 2,
                           color: Colors.grey[200],
                         )),
-                    SizedBox(height: h/87),
+                    SizedBox(height: h/100),
                     Text(
                       'last read was done at: ${timeStamp}',
                       style: TextStyle(
+                        fontSize: h/57,
                         color: Colors.grey[200],
                       ),
                     ),
