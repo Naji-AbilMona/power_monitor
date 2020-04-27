@@ -11,17 +11,19 @@ class TodaysConsumption extends StatefulWidget {
 class _TodaysConsumptionState extends State<TodaysConsumption> {
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Column(
       children: <Widget>[
         Text(
           'Today\'s\nConsumption',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: h/35,
             color: Color(0xffffa500),
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: h/86),
         new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('consumption').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -133,7 +135,7 @@ class _TodaysConsumptionState extends State<TodaysConsumption> {
                         : todaysConsumption.toString() + ' kwh',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: h/26,
                       wordSpacing: 2,
                       color: Colors.grey[200],
                     ));

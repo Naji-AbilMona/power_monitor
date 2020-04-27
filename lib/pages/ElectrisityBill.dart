@@ -17,6 +17,8 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
 
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -249,7 +251,7 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                             ),
                           ],
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height / 16),
+                        SizedBox(height: MediaQuery.of(context).size.height / 18),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,18 +262,18 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                                   'Month-to-Date\nConsumption\n',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: h/35,
                                     color: Color(0xffffa500),
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: h/86),
                                 Text(
                                     firstReadHour == 25 || firstReadMinute == 61
                                         ? 'no reads this month'
                                         : monthToDateConsumption.toString() + ' kwh',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: h/23,
                                       wordSpacing: 2,
                                       color: Colors.grey[200],
                                     )),
@@ -286,18 +288,18 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                                       : 'Full Month\nConsumption\nEstimation',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: h/35,
                                     color: Color(0xffffa500),
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: h/86),
                                 Text(
                                     firstReadHour == 25 || firstReadMinute == 61
                                         ? 'no reads this month'
                                         : consumptionEST.toString() + ' kwh',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: h/23,
                                       wordSpacing: 2,
                                       color: Colors.grey[200],
                                     )),
@@ -310,9 +312,9 @@ class _ElectrisityBillState extends State<ElectrisityBill> {
                         Container(
                           color: Colors.white38,
                           child: DataTable(
-                            dataRowHeight: 30,
+                            dataRowHeight: h/23,
                             columns: [
-                              DataColumn(label: Text('Item', style: TextStyle(color: Colors.grey[900], fontWeight: FontWeight.bold),)),
+                              DataColumn(label: Text('Item\nLBP\'s', style: TextStyle(color: Colors.grey[900], fontWeight: FontWeight.bold),)),
                               DataColumn(
                                   label: Text('Amount\nMTD',
                                       style: TextStyle(color: Colors.grey[900], fontWeight: FontWeight.bold),

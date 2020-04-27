@@ -22,6 +22,9 @@ class _GraphConsumptionState extends State<GraphConsumption> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -350,7 +353,7 @@ class _GraphConsumptionState extends State<GraphConsumption> {
         ),
         SizedBox(
           width: 60,
-          height: 34,
+          height: 28,
           child: FlatButton(
             onPressed: () {
               setState(() {

@@ -11,17 +11,19 @@ class MonthToDateConsumption extends StatefulWidget {
 class _MonthToDateConsumptionState extends State<MonthToDateConsumption> {
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Column(
       children: <Widget>[
         Text(
           'Month-to-Date\nConsumption',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: h/35,
             color: Color(0xffffa500),
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: h/86),
         new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('consumption').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -103,7 +105,7 @@ class _MonthToDateConsumptionState extends State<MonthToDateConsumption> {
                         : monthToDateConsumption.toString() + ' kwh',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: h/26,
                       wordSpacing: 2,
                       color: Colors.grey[200],
                     ));

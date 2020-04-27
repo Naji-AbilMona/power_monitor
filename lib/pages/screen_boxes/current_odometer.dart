@@ -11,17 +11,20 @@ class CurrentOdometer extends StatefulWidget {
 class _CurrentOdometerState extends State<CurrentOdometer> {
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    print('height is $h and width is $w');
     return Column(
       children: <Widget>[
         Text(
           'Your Current Odometer',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: h/29,
             color: Color(0xffffa500),
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: h/91),
         new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('consumption').snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -62,11 +65,11 @@ class _CurrentOdometerState extends State<CurrentOdometer> {
                     new Text(odometer == null ? 'null!!' : odometer + ' kwh',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 34,
+                          fontSize: h/21,
                           wordSpacing: 2,
                           color: Colors.grey[200],
                         )),
-                    SizedBox(height: 8),
+                    SizedBox(height: h/87),
                     Text(
                       'last read was done at: ${timeStamp}',
                       style: TextStyle(
